@@ -5,6 +5,13 @@ import os
 root = tk.Tk()
 
 apps = []
+file = 'save.txt'
+
+if os.path.isfile(file):
+    with open(file, 'r') as f:
+        temp_apps = f.read()
+        temp_apps = temp_apps.split(',')
+        apps = [x for x in temp_apps if x.strip()]
 
 
 def addApp():
@@ -39,4 +46,12 @@ runApps = tk.Button(root, text='Run Apps', padx=10,
                     pady=5, fg='white', bg='#263042', command=runApps)
 runApps.pack()
 
+for app in apps:
+    label = tk.Label(frame, text=app)
+    label.pack()
+
 root.mainloop()
+
+with open(file, 'w') as f:
+    for app in apps:
+        f.write(app + ',')
